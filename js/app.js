@@ -5,13 +5,17 @@ const form = document.querySelector('form');
 // ------------------------------------------
 //  FETCH FUNCTIONS
 // ------------------------------------------
-fetch('https://dog.ceo/api/breeds/image/random')
-    .then(response => response.json())
-    .then(data => generateImage(data.message))
 
-fetch('https://dog.ceo/api/breeds/list')
-    .then(response => response.json())
+function fetchData(url) {
+    return fetch(url)
+        .then (res => res.json())
+}
+
+fetchData('https://dog.ceo/api/breeds/list')
     .then(data => generateOptions(data.message))
+
+fetchData('https://dog.ceo/api/breeds/image/random')
+    .then(data => generateImage(data.message))
 
 // ------------------------------------------
 //  HELPER FUNCTIONS
@@ -27,10 +31,10 @@ function generateImage(data) {
 function generateOptions(data){
     const breedList = data.map(item => `
         <option value='${item}'>${item}</option>
-    `);
-    
+    `).join('');
     select.innerHTML = breedList;
 }
+
 
 // ------------------------------------------
 //  EVENT LISTENERS
