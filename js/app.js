@@ -14,12 +14,17 @@ function fetchData(url) {
     )
 }
 
-fetchData('https://dog.ceo/api/breeds/list')
-    .then(data => generateOptions(data.message))
-    
+Promise.all([
+    fetchData('https://dog.ceo/api/breeds/list'),
+    fetchData('https://dog.ceo/api/breeds/image/random')
+])
+    .then(data =>{
+        const breedList = data[0].message;
+        const randomImg = data[1].message;
 
-fetchData('https://dog.ceo/api/breeds/image/random')
-    .then(data => generateImage(data.message))
+        generateOptions(breedList);
+        generateImage(randomImg);
+    })
 
 // ------------------------------------------
 //  HELPER FUNCTIONS
