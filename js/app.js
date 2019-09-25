@@ -35,11 +35,24 @@ function generateOptions(data){
     select.innerHTML = breedList;
 }
 
+function fetchBreedImg() {
+    const breed = select.value;
+    const img = card.querySelector('img');
+    const p = card.querySelector('p');
+
+    fetchData( `https://dog.ceo/api/breed/${breed}/images/random`)
+        .then(data => {
+            img.src = data.message;
+            img.alt = breed;
+            p.textContent = `Click to view more ${breed}s.`
+        })
+}
 
 // ------------------------------------------
 //  EVENT LISTENERS
 // ------------------------------------------
-
+select.addEventListener('change', fetchBreedImg);
+card.addEventListener('click', fetchBreedImg);
 
 
 // ------------------------------------------
