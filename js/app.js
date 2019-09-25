@@ -1,6 +1,7 @@
 const select = document.getElementById('breeds');
 const card = document.querySelector('.card'); 
 const form = document.querySelector('form');
+const btn = document.getElementById('submit');
 
 // ------------------------------------------
 //  FETCH FUNCTIONS
@@ -66,6 +67,7 @@ function fetchBreedImg() {
         })
 }
 
+
 // ------------------------------------------
 //  EVENT LISTENERS
 // ------------------------------------------
@@ -81,13 +83,16 @@ function postData(e) {
     e.preventDefault();
     const name = document.getElementById('name').value;
     const comment = document.getElementById('comment').value;
-
+   
+    document.getElementById('name').value = '';
+    document.getElementById('comment').value = '';
+    
     fetch('https://jsonplaceholder.typicode.com/comments', {
         method: 'POST',
         headers: {
-            'Content-Type' : 'application/json'
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({name:name, comment:comment})
+        body: JSON.stringify({name, comment})
     } )
         .then(checkStatus)
         .then(res => res.json())
